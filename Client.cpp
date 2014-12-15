@@ -43,12 +43,17 @@ public:
 
                 if(theString.find("flag:") == 0){
                     theString.erase(0,5);
-                    std::cout << theString << " has the flag!" << std::endl;
+                    if (theString == "you"){
+                    std::cout << "\n" << theString << " have the flag!" << std::endl;
                     cout << "o____" << endl;
                              cout << "|\\//|"<< endl;
                              cout << "|//\\|"<< endl;
                              cout << "|"<< endl;
                              cout << "| "<< endl;
+                    }
+                    else std::cout << "\n" << theString << " has the flag!" << std::endl;
+
+                    
                 }
 
                 else if(theString.find("score:") == 0){
@@ -58,7 +63,7 @@ public:
                 }
 
                 else if(theString.find("paused") == 0){
-                    std::cout << "Game is paused until more players join!"<<endl;
+                    std::cout << "\nGame is paused until more players join!"<<endl;
                 }
 
                 else if (theString.find("done") == 0){shouldDie = true; break;}
