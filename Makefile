@@ -1,11 +1,11 @@
 Client : Client.o socket.o Blockable.o thread.o
-	g++ -o Client Client.o socket.o thread.o Blockable.o -pthread -l rt
+	g++ -o Client Client.o socket.o thread.o Blockable.o -pthread 
 
 Client.o : Client.cpp SharedObject.h Semaphore.h thread.h
 	g++ -c Client.cpp 
 
 Server : Server.o thread.o socket.o socketserver.o Blockable.o
-	g++ -o Server Server.o thread.o socket.o socketserver.o Blockable.o -pthread -l rt
+	g++ -o Server Server.o thread.o socket.o socketserver.o Blockable.o -pthread
 
 Blockable.o : Blockable.h Blockable.cpp
 	g++ -c Blockable.cpp

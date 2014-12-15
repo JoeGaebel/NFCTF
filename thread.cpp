@@ -5,7 +5,7 @@
 Thread::Thread(bool startOnCreation/*==false*/,int exitT/*=1000*/)
     : resumeSemaphore(0), pauseEvent(),stopEvent(), exitTimeout(exitT)
 {
-    clock_gettime(CLOCK_REALTIME,&creation);
+    // clock_gettime(CLOCK_REALTIME,&creation);
     if (startOnCreation)
         Start();
 }
@@ -13,7 +13,7 @@ Thread::Thread(bool startOnCreation/*==false*/,int exitT/*=1000*/)
 long Thread::NowInUSec(void) const
 {
     timespec now;
-    clock_gettime(CLOCK_REALTIME,&now);
+    // clock_gettime(CLOCK_REALTIME,&now);
     return 100000*(now.tv_sec - creation.tv_sec)+(now.tv_nsec-creation.tv_nsec)/1000;
 }
 

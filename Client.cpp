@@ -40,15 +40,21 @@ public:
             else
             {
                 std::string theString = bytes.ToString();
-                // cout <<"**********88888888888888888888**********"<<theString<<endl;
+
                 if(theString.find("flag:") == 0){
                     theString.erase(0,5);
                     std::cout << theString << " has the flag!" << std::endl;
+                    cout << "o____" << endl;
+                             cout << "|\\//|"<< endl;
+                             cout << "|//\\|"<< endl;
+                             cout << "|"<< endl;
+                             cout << "| "<< endl;
                 }
 
                 else if(theString.find("score:") == 0){
                     theString.erase(0,6);
-                    std::cout << "Your score is now " << theString << std::endl;
+                    cout.flush();
+                    cout <<  "\r" << "Your score is now " << theString;
                 }
 
                 else if(theString.find("paused") == 0){
