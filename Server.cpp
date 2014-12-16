@@ -37,26 +37,26 @@ public:
     }
 
     void pushScore(){ //Used to send the updated score information to client
-       stringstream ss;
-       ss << points;
-       string pointString;
-       ss >> pointString;
-       string toSend = "score:"+pointString;
-       ByteArray ba(toSend);
-       int written = theSocket.Write(ba);
-       if ( written != ba.v.size())
-       {
-         cout << "Problem sending Score info, Wrote: " << written << endl;
-         cout << "The socket appears to have been closed suddenly" << endl;
-     }
+     stringstream ss;
+     ss << points;
+     string pointString;
+     ss >> pointString;
+     string toSend = "score:"+pointString;
+     ByteArray ba(toSend);
+     int written = theSocket.Write(ba);
+     if ( written != ba.v.size())
+     {
+       cout << "Problem sending Score info, Wrote: " << written << endl;
+       cout << "The socket appears to have been closed suddenly" << endl;
+   }
 
- }  
+}  
 
     void pushGamePaused(){ //Used to send the updated score information to client
-       string toSend = "paused";
-       ByteArray ba(toSend);
-       int written = theSocket.Write(ba);
-   }  
+     string toSend = "paused";
+     ByteArray ba(toSend);
+     int written = theSocket.Write(ba);
+ }  
 
 
     void pushFlagHolder(string name){//Used to tell client who has the flag
@@ -65,17 +65,17 @@ public:
         int written = theSocket.Write(ba);
         if ( written != ba.v.size())
         {  
-         cout << "Problem sending Flag info, Wrote: " << written << endl;
-         cout << "The socket appears to have been closed suddenly" << endl;
-     }
+           cout << "Problem sending Flag info, Wrote: " << written << endl;
+           cout << "The socket appears to have been closed suddenly" << endl;
+       }
 
- }
+   }
 
- long ThreadMain(void);
+   long ThreadMain(void);
 
 
- ~PlayerThread(void)
- {
+   ~PlayerThread(void)
+   {
     cout <<playerName<<" has left"<<endl;
     theSocket.Write(ByteArray("done"));
     theSocket.Close();
@@ -120,25 +120,25 @@ public:
             if (gameStarted){
         //Loop to increment points based on who has flag
                 for (int i = 0; i< players.size(); i++){
-                 if (players[i]->hasFlag) {
-                  players[i]->points+=5;
-                  players[i]->pushScore();
-                   }
+                   if (players[i]->hasFlag) {
+                      players[i]->points+=5;
+                      players[i]->pushScore();
+                  }
 
-             }
+              }
 
 
-             }
-      Sleep(5000);
+          }
+          Sleep(5000);
+      }
+
+  }
+  ~Game(void)
+  {
+
   }
 
-}
-~Game(void)
-{
-
-}
-
-int findPlayerFromID(int playerID){
+  int findPlayerFromID(int playerID){
     for (int i = 0; i<players.size(); i++)
         if (players[i]->playerID == playerID)
             return i;
@@ -161,13 +161,13 @@ int findPlayerFromID(int playerID){
 
     void updateClientPaused(){
         for (int i=0; i<players.size(); i++){
-         players[i]->pushGamePaused();
-     }
+           players[i]->pushGamePaused();
+       }
 
 
- }
+   }
 
- void killPlayer(int playerID){
+   void killPlayer(int playerID){
     int index = findPlayerFromID(playerID);
     PlayerThread* toDelete = players[index];
     if (toDelete->hasFlag) {
@@ -247,6 +247,7 @@ long PlayerThread::ThreadMain(void){
                 theSocket.Write(ByteArray("done"));
                 game->killPlayer(playerID);
                 cout <<playerName<<" has left the game!"<<endl;
+                break;
             }
                 // bytes.v[0]='R';
                 // theSocket.Write(bytes);
@@ -317,12 +318,11 @@ int main(void)
         }
     }
     cout<<"About to delete threads"<<endl;
-    for (int i=0;i<threads.size();i++){
-        threads[i]->Stop();
-        delete threads[i];
-    }
-
     for (int i=0;i<games.size();i++){
+        for (int k=0; k<games[i]->players.size(); k++){
+            games[i]->players[k]->Stop();
+            delete games[i]->players[k];
+        }
         delete games[i];
     }
 
